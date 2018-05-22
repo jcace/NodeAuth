@@ -33,6 +33,8 @@ const AuthSchema = new Schema({
     message: 'Not a valid password!',
   },
   username: String,
+  verified: Boolean,
+  verKey: String,
 });
 
 AuthSchema.plugin(uniqueValidator, {
@@ -76,7 +78,6 @@ AuthSchema.methods = {
       ...this.toJSON(),
     };
   },
-
   // override the toJSON method to make sure we don't send the password back
 
   toJSON() {

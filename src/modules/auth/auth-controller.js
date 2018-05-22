@@ -6,7 +6,7 @@ export const signup = async (req, res) => {
     // Register a new user
     const user = await AuthServices.register(req.body);
 
-    sendVerificationEmail(user.toAuthJson().token, user.email);
+    sendVerificationEmail(user.verKey, user.email);
 
     return res.status(200).json(user);
   } catch (error) {
@@ -19,4 +19,13 @@ export const login = (req, res, next) => {
   res.status(200).json(req.user.toAuthJson());
 
   return next();
+};
+
+export const verifyEmail = async (req, res) => {
+  try {
+    const result = await AuthServices.verify(req.params);
+    res.status(200).json(result);
+  } catch (error) {
+    return res.status(400).json({ error: String(error) });
+  }
 };

@@ -13,14 +13,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendVerificationEmail = (jwt, email) => {
+export const sendVerificationEmail = (token, email) => {
   // setup email data with unicode symbols
   const mailOptions = {
     from: '"Fred Foo 👻" <foo@example.com>', // sender address
     to: email, // list of receivers
     subject: 'Hello ✔', // Subject line
     text: 'Hello world?', // plain text body
-    html: `Click here to activate account: <a href="http://localhost:8000/api/v1/activate</a> JWT: ${jwt}`, // html body
+    html: `Click here to activate account: <a href="http://localhost:8000/api/v1/auth/${email}/${token}</a>`, // html body
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
