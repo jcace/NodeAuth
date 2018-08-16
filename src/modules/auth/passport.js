@@ -10,6 +10,15 @@ const localOpts = {
   usernameField: 'email',
 };
 
+function authenticationMiddleware() {
+  return function (req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+    res.redirect('/');
+  };
+}
+
 const localLogin = new LocalStrategy(localOpts, async (email, password, done) => {
   try {
     // Grab the user from DB
@@ -52,5 +61,5 @@ const jwtLogin = new JWTStrategy(jwtOpts, async (payload, done) => {
 passport.use(localLogin);
 passport.use(jwtLogin);
 
-export const authLocal = passport.authenticate('local', { session: false });
-export const authJwt = passport.authenticate('jwt', { session: false });
+export const authLocal = passport.authenticate('local', { session: true });
+export const authJwt = passport.authenticate('jwt', { session: true });

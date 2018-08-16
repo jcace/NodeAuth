@@ -31,7 +31,6 @@ class AuthServices {
 
   // ! These errors aren't caught by the calling try/catch?
   verify({ email, token }) {
-
     try {
       AuthModel.findOne({ email: email }, (err, user) => {
         if (!user) {
